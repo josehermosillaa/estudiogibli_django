@@ -1,0 +1,24 @@
+{% extends 'peliculas/base.html' %}
+{% block content %}
+<h1 class="text-center">Estudio Ghibli</h1>
+<div class="row">
+    {% for pelicula in peliculas %}
+        <div class="card m-3" style="width: 18rem;">
+            <img src="{{pelicula.poster}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{pelicula.title}}</h5>
+                <p class="card-text">
+                    <ul>
+                        <li>Género: {{pelicula.genre}}</li>
+                        <li>Clasificación: {{pelicula.rating}}</li>
+                        <li>Fecha Lanzamiento: {{pelicula.release|date:"d/m/Y"}}</li>
+                        <li>Director: {{pelicula.director}}</li>
+                    </ul>
+                </p>
+                <a href="{{pelicula.poster}}" class="btn btn-primary">Ver poster</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

@@ -1,10 +1,13 @@
 import requests
+import datetime
 from django.shortcuts import render, HttpResponse
 from .models import Pelicula
 # Create your views here.
 
 def index_view(request):
-    return HttpResponse("<h1> Estudio Gibli </h1>")
+    peliculas = Pelicula.objects.all() #Me traigo todos los datos de la tabla pelicula
+    context = {"peliculas":peliculas}
+    return render(request, "peliculas/index.html", context)
 
 def load_view(request):
     url = "https://studio-ghibli-films-api.herokuapp.com/api"
@@ -20,7 +23,7 @@ def load_view(request):
                 poster=value["poster"],
                 genre=value["genre"],
                 rating=value["rating"],
-                release=value["release"],
+                release=datetime.datetime.strptime(value["release"],"%B %d, %Y") if value["release"] !="TBA" else None,
                 director=value["director"]
             )
         return HttpResponse("<h1>los datos se cargaron correctamente</h1>")
